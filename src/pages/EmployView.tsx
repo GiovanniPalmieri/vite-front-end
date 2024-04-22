@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { getRepo } from '../api/ApiMockRepository';
+import ProjectTableView from '../component/ProjectTableView';
 
 export default function EmployView() {
     const { state } = useLocation()
@@ -15,7 +16,7 @@ export default function EmployView() {
     <>
         <h3>Progetti</h3>
         <ul>
-            {projects?.map((p,key) => <li key={key}>Nome: {p.name} Manager: {p.manager.name}</li>)}
+            <ProjectTableView mode='employee' projects={projects ?? []} />
         </ul>
         <h3>Task</h3>
         <ul>
