@@ -1,27 +1,49 @@
 import { useLocation } from 'react-router-dom';
 import { getRepo } from '../api/ApiMockRepository';
 import ProjectTableView from '../component/ProjectTableView';
+import { ProjectEntity, TaskEntity } from '../api/ApiEntities';
+import TaskTable from '../component/TaskTable';
+import { useReducer } from 'react';
+
+export interface EmployeeViewAction {
+    type: 'removeTask'
+    task: TaskEntity
+}
+
+function reducer(state: ProjectEntity[], action: EmployeeViewAction): ProjectEntity[] {
+    switch (action.type) {
+        case 'removeTask':
+            let newTaskList = action.task.fromProject.tasks.filter( t => t !== action.task)
+            action.task.fromProject.tasks = newTaskList
+            return [ ...state ]
+
+    }
+}
 
 export default function EmployView() {
     const { state } = useLocation()
 
-    const projects = getRepo().getAssigendProjects(state.user.id)
-    const tasks = projects?.map(p => getRepo().getProjectTasks(p.id)).flat()
+    const tempProject = getRepo().getAssigendProjects(state.user.id)
+    if (tempProject === undefined) {
+        return <h1>Non hai progetti assegnati</h1>
+    }
 
-    function handleTaskDoneClick(event: object, taskId: string | undefined){
+    const [projectStates, dispatch] = useReducer(reducer, tempProject)
+
+    function handleTaskDoneClick(event: object, taskId: string | undefined) {
         console.log("task id: " + taskId)
     }
 
     return (
-    <>
-        <h3>Progetti</h3>
-        <ul>
-            <ProjectTableView mode='employee' projects={projects ?? []} />
-        </ul>
-        <h3>Task</h3>
-        <ul>
-            {tasks?.map((t,key) => <li key={key}>Nome: {t?.name} PRogetto: {t?.fromProject.name} Descrizione: {t?.description} 
-                <button onClick={event => handleTaskDoneClick(event,t?.id)}> Contrassegna come completata</button></li>)}
-        </ul>
-    </>);
+        <>
+            <h3>Progetti</h3>
+            <ul>
+                <ProjectTableView mode={{ mode: 'employee' }} projects={projectStates} />
+            </ul>
+            <h3>Task</h3>
+            <ul>
+                <TaskTable dispatch={dispatch} projects={projectStates} />
+            </ul>
+        </>
+    );
 }
