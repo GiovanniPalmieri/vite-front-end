@@ -1,13 +1,30 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { EmployEntity, ProjectEntity, TaskEntity } from "../api/ApiEntities";
 import { getRepo } from "../api/ApiMockRepository";
 import EmployViewFromManager from "../component/ManagerView/EmployViewFromManager";
 import { SelectChangeEvent } from "@mui/material";
-import ProjectViewFromManager from "../component/ManagerView/ProjectViewFromManager";
 import AddProjectView from "../component/ManagerView/AddProjectView";
 import { useLocation } from "react-router-dom";
-import TaskView from "../component/ManagerView/TaskView";
 import AddTask from "../component/ManagerView/AddTask";
+import ProjectTableView from "../component/ProjectTableView";
+import TaskTable from "../component/TaskTable";
+
+interface ManagerPageState {
+    employees: EmployEntity[]
+    projects: ProjectEntity[]
+    tasks: TaskEntity[]
+}
+
+export type ManagerPageAction =
+    | { type: 'CREATE_PROJECT'; project: ProjectEntity }
+    | { type: 'DELETE_PROJECT'; project: ProjectEntity };
+
+
+function reducer(state: ManagerPageState, action: ManagerPageAction){
+    switch(action.type){
+
+    }
+}
 
 export default function ManagerView() {
 
@@ -15,33 +32,7 @@ export default function ManagerView() {
     const searchParams = new URLSearchParams(location.search);
     const managerId = searchParams.get('id');
 
-    const [employs] = useState<EmployEntity[]>(getRepo().employs)
-    const [projects, setProjects] = useState<ProjectEntity[]>(getRepo().projects)
-    const [tasks, setTasks] = useState<TaskEntity[]>(getRepo().tasks)
-
-    function handleProjectSelection(e: SelectChangeEvent<string>, employ: EmployEntity) {
-        const project = projects.find(p => p.id === e.target.value)
-        project?.assignedTo.push(employ)
-        setProjects(projects.filter(() => true))
-    }
-
-    const handleProjectRemove = (projectToUnassignFromEmploy: ProjectEntity, employ: EmployEntity) => {
-
-        const nextProjects = projects.map(p => {
-            if (p.id === projectToUnassignFromEmploy.id) {
-                const newProject: ProjectEntity = {
-                    id: p.id,
-                    name: p.name,
-                    assignedTo: p.assignedTo.filter(e => e.id !== employ.id),
-                    manager: p.manager
-                }
-                return newProject
-            } else {
-                return p;
-            }
-        });
-        setProjects(nextProjects)
-    };
+    const [currentState, dispatch] = useReducer()
 
     return (
         <div className="managerPage">
@@ -54,11 +45,9 @@ export default function ManagerView() {
                 />
             </div>
             <div className="projectViewFromManager">
-                <ProjectViewFromManager
+                <ProjectTableView
+                    mode={{ mode: 'manager' }}
                     projects={projects}
-                    setProjects={setProjects}
-                    tasks={tasks}
-                    setTasks={setTasks}
                 />
             </div>
             <div className="addProjectView">
@@ -70,16 +59,15 @@ export default function ManagerView() {
                 />
             </div>
             <div className="taskView">
-                <TaskView 
-                    tasks={tasks}
-                    setTasks={setTasks} 
-                    employs={employs}                
-                    />
+                <TaskTable
+                    projects={projects}
+                    dispatch={ }
+                />
             </div>
             <div className="addTaskView">
-                <AddTask 
-                    projects={projects}                                   
-                    />
+                <AddTask
+                    projects={projects}
+                />
             </div>
         </div>
     );
