@@ -22,8 +22,7 @@ export default function ProjectTableViewRow({ project, mode }: ProjectTableViewR
             </TableCell>
             <TableCell>
                 {project.tasks.map((task, key) =>
-                    <Chip key={key} label={task.name} variant="outlined"
-                        onDelete={() => console.log('hai provato a rimuovere la task')} />
+                    <Chip key={key} label={task.name} variant="outlined" />
                 )}
             </TableCell>
             {mode === 'manager' &&

@@ -1,11 +1,12 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import { ProjectEntity } from '../api/ApiEntities'
 import ProjectTableViewRow from './ProjectTableViewRow';
+import { ComponentMode } from './ComponentModes';
 
 
 interface ProjectTableViewProps {
     projects: ProjectEntity[]
-    mode: 'manager' | 'employee'
+    mode: ComponentMode
 }
 
 export default function ProjectTableView({ projects, mode }: ProjectTableViewProps) {
@@ -18,7 +19,7 @@ export default function ProjectTableView({ projects, mode }: ProjectTableViewPro
                         <TableCell align="left">Nome</TableCell>
                         <TableCell align="left">Manager</TableCell>
                         <TableCell align="left">Tasks</TableCell>
-                        {mode === 'manager' && <TableCell align="left">Completa</TableCell>}
+                        {mode.mode === 'manager' && <TableCell align="left">Completa</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
