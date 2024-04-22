@@ -9,6 +9,7 @@ export interface ProjectEntity {
     name: string
     assignedTo: EmployEntity[]
     manager: EmployEntity
+    tasks: TaskEntity[]
 }
 
 export interface TaskEntity {
