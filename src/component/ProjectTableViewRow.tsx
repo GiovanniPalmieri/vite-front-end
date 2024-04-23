@@ -1,9 +1,10 @@
 import { TableRow, TableCell, Chip, Button } from "@mui/material";
 import { ProjectEntity } from "../api/ApiEntities"
+import { ComponentMode } from "./ComponentModes";
 
 interface ProjectTableViewRowProps {
     project: ProjectEntity;
-    mode: 'manager' | 'employee';
+    mode: ComponentMode;
 }
 
 export default function ProjectTableViewRow({ project, mode }: ProjectTableViewRowProps) {
@@ -25,7 +26,7 @@ export default function ProjectTableViewRow({ project, mode }: ProjectTableViewR
                     <Chip key={key} label={task.name} variant="outlined" />
                 )}
             </TableCell>
-            {mode === 'manager' &&
+            {mode === 'MANAGER' &&
                 <TableCell component="th" scope="row">
                     <Button variant="contained" onClick={() => console.log('hai provato a rimuovere il progetto')}>
                         Contrassegna come fatta </Button>

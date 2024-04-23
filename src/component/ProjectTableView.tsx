@@ -19,7 +19,7 @@ export default function ProjectTableView({ projects, mode }: ProjectTableViewPro
                         <TableCell align="left">Nome</TableCell>
                         <TableCell align="left">Manager</TableCell>
                         <TableCell align="left">Tasks</TableCell>
-                        {mode.mode === 'manager' && <TableCell align="left">Completa</TableCell>}
+                        {mode === 'MANAGER' && <TableCell align="left">Completa</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -27,7 +27,7 @@ export default function ProjectTableView({ projects, mode }: ProjectTableViewPro
                         <ProjectTableViewRow
                             key={key}
                             project={project}
-                            mode='employee'
+                            mode={mode}
                         />
                     ))}
                 </TableBody>

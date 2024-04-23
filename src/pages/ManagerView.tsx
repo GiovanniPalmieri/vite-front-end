@@ -1,13 +1,9 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import { EmployEntity, ProjectEntity, TaskEntity } from "../api/ApiEntities";
 import { getRepo } from "../api/ApiMockRepository";
-import EmployViewFromManager from "../component/ManagerView/EmployViewFromManager";
-import { SelectChangeEvent } from "@mui/material";
-import AddProjectView from "../component/ManagerView/AddProjectView";
+import EmployeeTable from "../component/ManagerView/EmployeeTable";
 import { useLocation } from "react-router-dom";
-import AddTask from "../component/ManagerView/AddTask";
 import ProjectTableView from "../component/ProjectTableView";
-import TaskTable from "../component/TaskTable";
 
 interface ManagerPageState {
     employees: EmployEntity[]
@@ -17,12 +13,39 @@ interface ManagerPageState {
 
 export type ManagerPageAction =
     | { type: 'CREATE_PROJECT'; project: ProjectEntity }
+    | { type: 'ASSIGN_PROJECT'; projectId: string ; employ: EmployEntity}
+    | { type: 'UNASSIGN_PROJECT'; project: ProjectEntity ; employ: EmployEntity}
     | { type: 'DELETE_PROJECT'; project: ProjectEntity };
 
 
-function reducer(state: ManagerPageState, action: ManagerPageAction){
-    switch(action.type){
+function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPageState {
+    switch (action.type) {
+        case 'CREATE_PROJECT':
+            return { ...state }
+        case 'DELETE_PROJECT':
+            return { ...state }
+        case 'ASSIGN_PROJECT':
+            let project = state.projects.find(p => p.id === action.projectId)
+            if (project === undefined) {
+                console.log('project not found')
+                return state;
+            }
+            project.assignedTo.push(action.employ)
+            return { ...state }
+        case 'UNASSIGN_PROJECT':
 
+            action.project.assignedTo = action.project.assignedTo.filter(p => p.id !== action.employ.id)
+            return { ...state }
+        default:
+            return { ...state }
+    }
+}
+
+function getStateFromDb(): ManagerPageState {
+    return {
+        employees: getRepo().employs,
+        projects: getRepo().projects,
+        tasks: getRepo().tasks
     }
 }
 
@@ -32,25 +55,24 @@ export default function ManagerView() {
     const searchParams = new URLSearchParams(location.search);
     const managerId = searchParams.get('id');
 
-    const [currentState, dispatch] = useReducer()
+    const [currentState, dispatch] = useReducer(reducer, getStateFromDb())
 
     return (
         <div className="managerPage">
             <div className="employViewFromManager">
-                <EmployViewFromManager
-                    employs={employs}
-                    handleProjectSelection={handleProjectSelection}
-                    handleProjectRemove={handleProjectRemove}
-                    projects={projects}
+                <EmployeeTable
+                    employs={currentState.employees}
+                    dispatcher={dispatch}
+                    projects={currentState.projects}
                 />
             </div>
             <div className="projectViewFromManager">
                 <ProjectTableView
-                    mode={{ mode: 'manager' }}
-                    projects={projects}
+                    mode={'MANAGER'}
+                    projects={currentState.projects}
                 />
             </div>
-            <div className="addProjectView">
+            {/* <div className="addProjectView">
                 <AddProjectView
                     projects={projects}
                     setProjects={setProjects}
@@ -68,7 +90,7 @@ export default function ManagerView() {
                 <AddTask
                     projects={projects}
                 />
-            </div>
+            </div> */}
         </div>
     );
 }
