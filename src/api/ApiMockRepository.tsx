@@ -1,4 +1,4 @@
-import { EmployEntity, ProjectEntity, TaskEntity } from "./ApiEntities";
+import { EmployeeEntity, ProjectEntity, TaskEntity } from "./ApiEntities";
 
 let repo: ApiMockRepository
 export function getRepo(): ApiMockRepository {
@@ -10,7 +10,7 @@ export function getRepo(): ApiMockRepository {
 
 class ApiMockRepository {
 
-    employs: EmployEntity[] = [
+    employs: EmployeeEntity[] = [
         { id: "1", name: "marco", isManager: true },
         { id: "2", name: "alessio", isManager: false },
         { id: "3", name: "enzo", isManager: false },
@@ -34,7 +34,7 @@ class ApiMockRepository {
         this.projects[1].tasks = [this.tasks[2], this.tasks[3]]
     }
 
-    public login(username: string, password: string): EmployEntity | undefined {
+    public login(username: string, password: string): EmployeeEntity | undefined {
         if (password !== "123") {
             return undefined;
         }

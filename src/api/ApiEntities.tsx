@@ -1,4 +1,4 @@
-export interface EmployEntity {
+export interface EmployeeEntity {
     id: string
     isManager: boolean
     name: string
@@ -7,8 +7,8 @@ export interface EmployEntity {
 export interface ProjectEntity {
     id: string
     name: string
-    assignedTo: EmployEntity[]
-    manager: EmployEntity
+    assignedTo: EmployeeEntity[]
+    manager: EmployeeEntity
     tasks: TaskEntity[]
 }
 

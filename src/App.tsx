@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
 import Auth from './pages/AuthPage';
 import EmployView from './pages/EmployPage';
-import ManagerView from './pages/ManagerManager';
+import ManagerPage from './pages/ManagerPage';
 
 export default function App(){
 
@@ -9,7 +9,7 @@ export default function App(){
         <Routes>
             <Route path="/" element={<Auth/>} />
             <Route path="/employView" element={<EmployView />} />
-            <Route path="/managerView" element={<ManagerView />} />
+            <Route path="/managerView" element={<ManagerPage />} />
         </Routes>
     );
 }

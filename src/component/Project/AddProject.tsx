@@ -1,10 +1,10 @@
 import { Button, FormLabel, Stack, TextField } from "@mui/material";
-import { EmployEntity, ProjectEntity } from "../../api/ApiEntities";
+import { EmployeeEntity, ProjectEntity } from "../../api/ApiEntities";
 import React from "react";
-import { ManagerPageAction } from "../../pages/ManagerManager";
+import { ManagerPageAction } from "../../pages/ManagerPage";
 
 interface AddProjectProps {
-    manager: EmployEntity;
+    manager: EmployeeEntity;
     projects: ProjectEntity[];
     dispatcher: (action: ManagerPageAction) => void;
 }

@@ -1,6 +1,6 @@
-import { EmployEntity } from "./ApiEntities";
+import { EmployeeEntity } from "./ApiEntities";
 
-export function getEmploys(): Promise<EmployEntity[]> {
+export function getEmploys(): Promise<EmployeeEntity[]> {
 
     const headers: Headers = new Headers();
 
@@ -23,6 +23,6 @@ export function getEmploys(): Promise<EmployEntity[]> {
         .then(res => {
             // The response has an `any` type, so we need to cast
             // it to the `User` type, and return it from the promise
-            return res as EmployEntity[]
+            return res as EmployeeEntity[]
         })
 }

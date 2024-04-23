@@ -1,18 +1,18 @@
 import { useReducer } from "react";
-import { EmployEntity, ProjectEntity, TaskEntity } from "../api/ApiEntities";
+import { EmployeeEntity, ProjectEntity, TaskEntity } from "../api/ApiEntities";
 import { getRepo } from "../api/ApiMockRepository";
-import EmployeeTable from "../component/Employ/EmployeeTable";
+import EmployeeTable from "../component/Employee/EmployeeTable";
 import { useLocation } from "react-router-dom";
 import ProjectTable from "../component/Project/ProjectTable";
 import AddProject from "../component/Project/AddProject";
 import TaskTable from "../component/Task/TaskTable";
 import { TaskAction } from "../component/Task/TaskActions";
 import AddTask from "../component/Task/AddTask";
-import { EmployeeAction } from "../component/Employ/EmployeeActions";
+import { EmployeeAction } from "../component/Employee/EmployeeActions";
 import { ProjectAction } from "../component/Project/ProjectActions";
 
 interface ManagerPageState {
-    employees: EmployEntity[]
+    employees: EmployeeEntity[]
     projects: ProjectEntity[]
     tasks: TaskEntity[]
 }
@@ -38,7 +38,7 @@ function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPag
                 console.log('project not found')
                 return state;
             }
-            project.assignedTo.push(action.employ)
+            project.assignedTo.push(action.employee)
             return { ...state }
         case 'DELETE_TASK':
             state.tasks = state.tasks.filter(t => t !== action.task)
@@ -51,7 +51,7 @@ function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPag
             state.projects.find(p => p === action.task.fromProject)?.tasks.push(action.task)
             return { ...state }
         case 'UNASSIGN_PROJECT':
-            action.project.assignedTo = action.project.assignedTo.filter(p => p.id !== action.employ.id)
+            action.project.assignedTo = action.project.assignedTo.filter(p => p.id !== action.employee.id)
             return { ...state }
         default:
             return { ...state }
@@ -66,7 +66,7 @@ function getStateFromDb(): ManagerPageState {
     }
 }
 
-export default function ManagerView() {
+export default function ManagerPage() {
 
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -78,7 +78,7 @@ export default function ManagerView() {
         <div className="managerPage">
             <div className="employViewFromManager">
                 <EmployeeTable
-                    employs={currentState.employees}
+                    employees={currentState.employees}
                     dispatcher={dispatch}
                     projects={currentState.projects}
                 />
