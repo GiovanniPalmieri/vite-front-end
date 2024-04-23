@@ -1,14 +1,15 @@
 import { Button, FormLabel, Stack, TextField } from "@mui/material";
 import { EmployEntity, ProjectEntity } from "../../api/ApiEntities";
 import React from "react";
+import { ManagerPageAction } from "../../pages/ManagerView";
 
 interface AddProjectViewProps {
     manager: EmployEntity;
     projects: ProjectEntity[];
-    setProjects: (projects: ProjectEntity[]) => void;
+    dispatcher: (action: ManagerPageAction) => void;
 }
 
-export default function AddProjectView({ manager, projects, setProjects }: AddProjectViewProps) {
+export default function AddProjectView({ manager, projects, dispatcher }: AddProjectViewProps) {
 
     const [projectName, setProjectName] = React.useState("progetto");
 
@@ -19,8 +20,7 @@ export default function AddProjectView({ manager, projects, setProjects }: AddPr
             newId =1;
         }
 
-        setProjects([...projects,{id: String(newId), name: projectName, assignedTo: [], manager: manager}] );
-        console.log(`aggiunto progetto ${projectName}`)
+        dispatcher({type: 'CREATE_PROJECT', project: {id: String(newId), name: projectName, assignedTo: [], manager: manager, tasks: []}})
     }
 
     return (

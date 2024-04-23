@@ -1,13 +1,15 @@
 import { TableRow, TableCell, Chip, Button } from "@mui/material";
 import { ProjectEntity } from "../api/ApiEntities"
 import { ComponentMode } from "./ComponentModes";
+import { ManagerPageAction } from "../pages/ManagerView";
 
 interface ProjectTableViewRowProps {
     project: ProjectEntity;
     mode: ComponentMode;
+    dispatcher: (action: ManagerPageAction) => void;
 }
 
-export default function ProjectTableViewRow({ project, mode }: ProjectTableViewRowProps) {
+export default function ProjectTableViewRow({ project, mode, dispatcher }: ProjectTableViewRowProps) {
     return (
         <TableRow key={project.id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -28,7 +30,8 @@ export default function ProjectTableViewRow({ project, mode }: ProjectTableViewR
             </TableCell>
             {mode === 'MANAGER' &&
                 <TableCell component="th" scope="row">
-                    <Button variant="contained" onClick={() => console.log('hai provato a rimuovere il progetto')}>
+                    <Button variant="contained" onClick={() =>
+                        dispatcher({ type: 'DELETE_PROJECT', project: project })}>
                         Contrassegna come fatta </Button>
                 </TableCell>}
         </TableRow>

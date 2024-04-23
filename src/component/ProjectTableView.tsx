@@ -2,14 +2,16 @@ import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody
 import { ProjectEntity } from '../api/ApiEntities'
 import ProjectTableViewRow from './ProjectTableViewRow';
 import { ComponentMode } from './ComponentModes';
+import { ManagerPageAction } from '../pages/ManagerView';
 
 
 interface ProjectTableViewProps {
     projects: ProjectEntity[]
     mode: ComponentMode
+    dispatcher: (action: ManagerPageAction) => void;
 }
 
-export default function ProjectTableView({ projects, mode }: ProjectTableViewProps) {
+export default function ProjectTableView({ projects, mode, dispatcher }: ProjectTableViewProps) {
     return (
         <TableContainer component={Paper} >
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -28,6 +30,7 @@ export default function ProjectTableView({ projects, mode }: ProjectTableViewPro
                             key={key}
                             project={project}
                             mode={mode}
+                            dispatcher={dispatcher}
                         />
                     ))}
                 </TableBody>

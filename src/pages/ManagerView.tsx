@@ -4,6 +4,7 @@ import { getRepo } from "../api/ApiMockRepository";
 import EmployeeTable from "../component/ManagerView/EmployeeTable";
 import { useLocation } from "react-router-dom";
 import ProjectTableView from "../component/ProjectTableView";
+import AddProjectView from "../component/ManagerView/AddProjectView";
 
 interface ManagerPageState {
     employees: EmployEntity[]
@@ -21,8 +22,11 @@ export type ManagerPageAction =
 function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPageState {
     switch (action.type) {
         case 'CREATE_PROJECT':
+            state.projects.findIndex(p => p.id === action.project.id) === -1 ? 
+                state.projects.push(action.project) : {}
             return { ...state }
         case 'DELETE_PROJECT':
+            state.projects = state.projects.filter(p => p !== action.project)
             return { ...state }
         case 'ASSIGN_PROJECT':
             let project = state.projects.find(p => p.id === action.projectId)
@@ -70,17 +74,18 @@ export default function ManagerView() {
                 <ProjectTableView
                     mode={'MANAGER'}
                     projects={currentState.projects}
+                    dispatcher={dispatch}
                 />
             </div>
-            {/* <div className="addProjectView">
+            <div className="addProjectView">
                 <AddProjectView
-                    projects={projects}
-                    setProjects={setProjects}
-                    manager={employs.find(e => e.id === managerId) || employs[0]}
+                    projects={currentState.projects}
+                    manager={currentState.employees.find(e => e.id === managerId) || currentState.employees[0]}
+                    dispatcher={dispatch}
 
                 />
             </div>
-            <div className="taskView">
+            {/* <div className="taskView">
                 <TaskTable
                     projects={projects}
                     dispatch={ }
