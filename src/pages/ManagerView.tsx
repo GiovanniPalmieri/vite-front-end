@@ -5,6 +5,8 @@ import EmployeeTable from "../component/ManagerView/EmployeeTable";
 import { useLocation } from "react-router-dom";
 import ProjectTableView from "../component/ProjectTableView";
 import AddProjectView from "../component/ManagerView/AddProjectView";
+import TaskTable from "../component/ManagerView/Task/TaskTable";
+import { TaskAction } from "../component/ManagerView/Task/TaskActions";
 
 interface ManagerPageState {
     employees: EmployEntity[]
@@ -16,7 +18,8 @@ export type ManagerPageAction =
     | { type: 'CREATE_PROJECT'; project: ProjectEntity }
     | { type: 'ASSIGN_PROJECT'; projectId: string ; employ: EmployEntity}
     | { type: 'UNASSIGN_PROJECT'; project: ProjectEntity ; employ: EmployEntity}
-    | { type: 'DELETE_PROJECT'; project: ProjectEntity };
+    | { type: 'DELETE_PROJECT'; project: ProjectEntity }
+    | TaskAction ;
 
 
 function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPageState {
@@ -36,6 +39,9 @@ function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPag
             }
             project.assignedTo.push(action.employ)
             return { ...state }
+        case 'DELETE_TASK':
+            state.tasks = state.tasks.filter(t => t !== action.task)
+            return {...state}
         case 'UNASSIGN_PROJECT':
 
             action.project.assignedTo = action.project.assignedTo.filter(p => p.id !== action.employ.id)
@@ -85,13 +91,13 @@ export default function ManagerView() {
 
                 />
             </div>
-            {/* <div className="taskView">
+            <div className="taskView">
                 <TaskTable
-                    projects={projects}
-                    dispatch={ }
+                    tasks={currentState.tasks}
+                    dispatch={dispatch}
                 />
             </div>
-            <div className="addTaskView">
+            {/* <div className="addTaskView">
                 <AddTask
                     projects={projects}
                 />

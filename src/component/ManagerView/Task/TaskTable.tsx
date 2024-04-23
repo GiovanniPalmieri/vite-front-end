@@ -1,15 +1,15 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
-import { ProjectEntity } from "../api/ApiEntities";
+import { ProjectEntity, TaskEntity } from "../../../api/ApiEntities";
 import TaskTableRow from "./TaskTableRow";
-import { EmployeeViewAction } from "../pages/EmployView";
+import { TaskAction } from "./TaskActions";
 
 
 export interface TaskViewProps {
-    projects: ProjectEntity[]
-    dispatch: (action: EmployeeViewAction) => void;
+    tasks: TaskEntity[]
+    dispatch: (action: TaskAction) => void;
 }
 
-export default function TaskView({ projects , dispatch}: TaskViewProps) {
+export default function TaskView({ tasks , dispatch}: TaskViewProps) {
 
     return (
         <TableContainer component={Paper} >
@@ -24,7 +24,7 @@ export default function TaskView({ projects , dispatch}: TaskViewProps) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {projects.map(p => p.tasks).flat().map((task, key) => (
+                    {tasks.map((task, key) => (
                         <TaskTableRow
                             key={key}
                             task={task}

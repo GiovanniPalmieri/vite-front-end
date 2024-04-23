@@ -1,10 +1,10 @@
 import { Button, TableCell, TableRow } from "@mui/material";
-import { TaskEntity } from "../api/ApiEntities";
-import { EmployeeViewAction } from "../pages/EmployView";
+import { TaskEntity } from "../../../api/ApiEntities";
+import { TaskAction } from "./TaskActions";
 
 interface TaskViewRowProps {
     task: TaskEntity
-    dispatch: (action: EmployeeViewAction) => void;
+    dispatch: (action: TaskAction) => void;
 }
 
 export default function TaskViewRow({ task, dispatch }: TaskViewRowProps) {
@@ -25,7 +25,7 @@ export default function TaskViewRow({ task, dispatch }: TaskViewRowProps) {
             </TableCell>
             <TableCell>
                 <Button variant="contained" onClick={() => 
-                    dispatch({type: 'removeTask',task:task})}> Completata </Button>
+                    dispatch({type: 'DELETE_TASK', task:task})}> Completata </Button>
             </TableCell>
         </TableRow>
 
