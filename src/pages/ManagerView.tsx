@@ -7,6 +7,7 @@ import ProjectTableView from "../component/ProjectTableView";
 import AddProjectView from "../component/ManagerView/AddProjectView";
 import TaskTable from "../component/ManagerView/Task/TaskTable";
 import { TaskAction } from "../component/ManagerView/Task/TaskActions";
+import AddTask from "../component/ManagerView/Task/AddTask";
 
 interface ManagerPageState {
     employees: EmployEntity[]
@@ -39,10 +40,17 @@ function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPag
             }
             project.assignedTo.push(action.employ)
             return { ...state }
-        case 'DELETE_TASK':
-            state.tasks = state.tasks.filter(t => t !== action.task)
-            return {...state}
-        case 'UNASSIGN_PROJECT':
+            case 'DELETE_TASK':
+                state.tasks = state.tasks.filter(t => t !== action.task)
+                return {...state}
+            case 'ADD_TASK':
+                if(state.tasks.findIndex(t => t.id === action.task.id) !== -1 ){
+                    return state
+                }
+                state.tasks.push(action.task)
+                state.projects.find(p => p === action.task.fromProject)?.tasks.push(action.task)
+                return {...state}
+            case 'UNASSIGN_PROJECT':
 
             action.project.assignedTo = action.project.assignedTo.filter(p => p.id !== action.employ.id)
             return { ...state }
@@ -97,11 +105,12 @@ export default function ManagerView() {
                     dispatch={dispatch}
                 />
             </div>
-            {/* <div className="addTaskView">
+            <div className="addTaskView">
                 <AddTask
-                    projects={projects}
+                    projects={currentState.projects}
+                    dispatcher={dispatch}
                 />
-            </div> */}
+            </div>
         </div>
     );
 }
