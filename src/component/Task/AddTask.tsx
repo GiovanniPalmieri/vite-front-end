@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { ProjectEntity } from "../../api/ApiEntities";
-import { Stack, FormLabel, TextField, Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Stack, FormLabel, TextField, Button, SelectChangeEvent } from "@mui/material";
 import { TaskAction } from "./TaskActions";
+import SelectProjectComponent from "../SelectProjectComponent";
 
 export interface AddTaskProps {
     projects: ProjectEntity[]
@@ -40,18 +41,13 @@ export default function AddTask({ projects , dispatcher}: AddTaskProps) {
             <TextField type="text" size="small" value={taskDescription}
                 onChange={(e) => setTaskDescription(e.target.value)} />
             <FormLabel>Progetto</FormLabel>
-            <Select
-                        labelId="select-project-label"
-                        id="select-project"
-                        label={taskProject?.name}
-                        value={taskProject?.id}
-                        onChange={(e) => handleTaskProjectAssignment(e)}
-                    >
-                        <MenuItem value="None">
-                            <em>None</em>
-                        </MenuItem>
-                        {projects.map((project, key) => <MenuItem key={key} value={project.id}>{project.name}</MenuItem>)}
-                    </Select>
+            <SelectProjectComponent 
+                items={projects.map(p => {return {value: p.id, view: p.name}})}
+                onSelection={handleTaskProjectAssignment}
+                selectionHint="Seleziona Progetto"
+                defaultLabel=""
+                defaultValue=""
+            />
             <Button onClick={handleTaskAdd}> Aggiungi </Button>
         </Stack>
     );

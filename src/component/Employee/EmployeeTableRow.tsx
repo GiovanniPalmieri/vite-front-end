@@ -1,6 +1,7 @@
-import { TableRow, TableCell, Chip, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { TableRow, TableCell, Chip, SelectChangeEvent } from "@mui/material";
 import { EmployeeEntity, ProjectEntity } from "../../api/ApiEntities";
 import { EmployeeAction } from "./EmployeeActions";
+import SelectProjectComponent from "../SelectProjectComponent";
 
 export interface EmployeeTableRowProps {
     employee: EmployeeEntity
@@ -8,7 +9,16 @@ export interface EmployeeTableRowProps {
     dispatcher: (action: EmployeeAction) => void;
 }
 
-export function EmployeeTableRow({employee , projects , dispatcher} : EmployeeTableRowProps) {
+export function EmployeeTableRow({ employee, projects, dispatcher }: EmployeeTableRowProps) {
+
+    function onSelection(e: SelectChangeEvent<string>) {
+        dispatcher({
+            type: 'ASSIGN_PROJECT',
+            employee: employee,
+            projectId: e.target.value
+        });
+    }
+
     return (
         <TableRow key={employee.id} sx={{
             '&:last-child td, &:last-child th': {
@@ -30,22 +40,13 @@ export function EmployeeTableRow({employee , projects , dispatcher} : EmployeeTa
                 })} key={key} />)}
             </TableCell>
             <TableCell component="th" scope="row">
-                <FormControl variant="standard" sx={{
-                    m: 1,
-                    minWidth: 120
-                }} size="small">
-                    <InputLabel id="demo-select-small-label">Aggiungi</InputLabel>
-                    <Select labelId="select-project-label" id="select-project" label="" value='' onChange={e => dispatcher({
-                        type: 'ASSIGN_PROJECT',
-                        employee: employee,
-                        projectId: e.target.value
-                    })}>
-                        <MenuItem value="None">
-                            <em>None</em>
-                        </MenuItem>
-                        {projects.map((p, key) => <MenuItem key={key} value={p.id}>{p.name}</MenuItem>)}
-                    </Select>
-                </FormControl>
+                <SelectProjectComponent
+                    items={projects.map(p => { return { value: p.id, view: p.name }; })}
+                    selectionHint="Aggiungi"
+                    onSelection={onSelection}
+                    defaultLabel=""
+                    defaultValue=""
+                />
             </TableCell>
         </TableRow>
     );
