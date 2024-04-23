@@ -1,15 +1,15 @@
 import { TableRow, TableCell, Chip, Button } from "@mui/material";
-import { ProjectEntity } from "../api/ApiEntities"
-import { ComponentMode } from "./ComponentModes";
-import { ManagerPageAction } from "../pages/ManagerView";
+import { ProjectEntity } from "../../api/ApiEntities"
+import { ComponentMode } from "../ComponentModes";
+import { ProjectAction } from "./ProjectActions";
 
-interface ProjectTableViewRowProps {
+interface ProjectTableRowProps {
     project: ProjectEntity;
     mode: ComponentMode;
-    dispatcher: (action: ManagerPageAction) => void;
+    dispatcher: (action: ProjectAction) => void;
 }
 
-export default function ProjectTableViewRow({ project, mode, dispatcher }: ProjectTableViewRowProps) {
+export default function ProjectTableRow({ project, mode, dispatcher }: ProjectTableRowProps) {
     return (
         <TableRow key={project.id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>

@@ -1,15 +1,15 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
-import { ProjectEntity, TaskEntity } from "../../../api/ApiEntities";
+import { TaskEntity } from "../../api/ApiEntities";
 import TaskTableRow from "./TaskTableRow";
 import { TaskAction } from "./TaskActions";
 
 
-export interface TaskViewProps {
+export interface TaskTableProps {
     tasks: TaskEntity[]
     dispatch: (action: TaskAction) => void;
 }
 
-export default function TaskView({ tasks , dispatch}: TaskViewProps) {
+export default function TaskTable({ tasks , dispatch}: TaskTableProps) {
 
     return (
         <TableContainer component={Paper} >

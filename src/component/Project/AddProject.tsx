@@ -1,15 +1,15 @@
 import { Button, FormLabel, Stack, TextField } from "@mui/material";
 import { EmployEntity, ProjectEntity } from "../../api/ApiEntities";
 import React from "react";
-import { ManagerPageAction } from "../../pages/ManagerView";
+import { ManagerPageAction } from "../../pages/ManagerManager";
 
-interface AddProjectViewProps {
+interface AddProjectProps {
     manager: EmployEntity;
     projects: ProjectEntity[];
     dispatcher: (action: ManagerPageAction) => void;
 }
 
-export default function AddProjectView({ manager, projects, dispatcher }: AddProjectViewProps) {
+export default function AddProject({ manager, projects, dispatcher }: AddProjectProps) {
 
     const [projectName, setProjectName] = React.useState("progetto");
 

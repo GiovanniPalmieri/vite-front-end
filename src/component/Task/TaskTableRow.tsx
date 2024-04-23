@@ -1,13 +1,13 @@
 import { Button, TableCell, TableRow } from "@mui/material";
-import { TaskEntity } from "../../../api/ApiEntities";
+import { TaskEntity } from "../../api/ApiEntities";
 import { TaskAction } from "./TaskActions";
 
-interface TaskViewRowProps {
+interface TaskTableRowProps {
     task: TaskEntity
     dispatch: (action: TaskAction) => void;
 }
 
-export default function TaskViewRow({ task, dispatch }: TaskViewRowProps) {
+export default function TaskTableRow({ task, dispatch }: TaskTableRowProps) {
 
     return (
         <TableRow>

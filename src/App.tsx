@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
-import Auth from './pages/Auth';
-import EmployView from './pages/EmployView';
-import ManagerView from './pages/ManagerView';
+import Auth from './pages/AuthPage';
+import EmployView from './pages/EmployPage';
+import ManagerView from './pages/ManagerManager';
 
 export default function App(){
 

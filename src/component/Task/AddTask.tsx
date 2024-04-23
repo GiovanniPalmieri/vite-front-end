@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProjectEntity } from "../../../api/ApiEntities";
+import { ProjectEntity } from "../../api/ApiEntities";
 import { Stack, FormLabel, TextField, Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { TaskAction } from "./TaskActions";
 

@@ -1,10 +1,10 @@
 import { useLocation } from 'react-router-dom';
 import { getRepo } from '../api/ApiMockRepository';
-import ProjectTableView from '../component/ProjectTableView';
+import ProjectTable from '../component/Project/ProjectTable';
 import { ProjectEntity } from '../api/ApiEntities';
-import TaskTable from '../component/ManagerView/Task/TaskTable';
+import TaskTable from '../component/Task/TaskTable';
 import { useReducer } from 'react';
-import { TaskAction } from '../component/ManagerView/Task/TaskActions';
+import { TaskAction } from '../component/Task/TaskActions';
 
 
 export type EmployeePageAction =
@@ -16,6 +16,8 @@ function reducer(state: ProjectEntity[], action: TaskAction): ProjectEntity[] {
             let newTaskList = action.task.fromProject.tasks.filter(t => t !== action.task)
             action.task.fromProject.tasks = newTaskList
             return [...state]
+        default:
+            return state
 
     }
 }
@@ -34,7 +36,7 @@ export default function EmployView() {
         <>
             <h3>Progetti</h3>
             <ul>
-                <ProjectTableView
+                <ProjectTable
                     mode={'EMPLOYEE'}
                     projects={projectStates}
                     dispatcher={() => undefined}

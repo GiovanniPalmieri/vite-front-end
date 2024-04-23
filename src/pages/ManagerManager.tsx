@@ -1,13 +1,15 @@
 import { useReducer } from "react";
 import { EmployEntity, ProjectEntity, TaskEntity } from "../api/ApiEntities";
 import { getRepo } from "../api/ApiMockRepository";
-import EmployeeTable from "../component/ManagerView/EmployeeTable";
+import EmployeeTable from "../component/Employ/EmployeeTable";
 import { useLocation } from "react-router-dom";
-import ProjectTableView from "../component/ProjectTableView";
-import AddProjectView from "../component/ManagerView/AddProjectView";
-import TaskTable from "../component/ManagerView/Task/TaskTable";
-import { TaskAction } from "../component/ManagerView/Task/TaskActions";
-import AddTask from "../component/ManagerView/Task/AddTask";
+import ProjectTable from "../component/Project/ProjectTable";
+import AddProject from "../component/Project/AddProject";
+import TaskTable from "../component/Task/TaskTable";
+import { TaskAction } from "../component/Task/TaskActions";
+import AddTask from "../component/Task/AddTask";
+import { EmployeeAction } from "../component/Employ/EmployeeActions";
+import { ProjectAction } from "../component/Project/ProjectActions";
 
 interface ManagerPageState {
     employees: EmployEntity[]
@@ -16,17 +18,15 @@ interface ManagerPageState {
 }
 
 export type ManagerPageAction =
-    | { type: 'CREATE_PROJECT'; project: ProjectEntity }
-    | { type: 'ASSIGN_PROJECT'; projectId: string ; employ: EmployEntity}
-    | { type: 'UNASSIGN_PROJECT'; project: ProjectEntity ; employ: EmployEntity}
-    | { type: 'DELETE_PROJECT'; project: ProjectEntity }
-    | TaskAction ;
+    | ProjectAction
+    | EmployeeAction
+    | TaskAction;
 
 
 function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPageState {
     switch (action.type) {
         case 'CREATE_PROJECT':
-            state.projects.findIndex(p => p.id === action.project.id) === -1 ? 
+            state.projects.findIndex(p => p.id === action.project.id) === -1 ?
                 state.projects.push(action.project) : {}
             return { ...state }
         case 'DELETE_PROJECT':
@@ -40,18 +40,17 @@ function reducer(state: ManagerPageState, action: ManagerPageAction): ManagerPag
             }
             project.assignedTo.push(action.employ)
             return { ...state }
-            case 'DELETE_TASK':
-                state.tasks = state.tasks.filter(t => t !== action.task)
-                return {...state}
-            case 'ADD_TASK':
-                if(state.tasks.findIndex(t => t.id === action.task.id) !== -1 ){
-                    return state
-                }
-                state.tasks.push(action.task)
-                state.projects.find(p => p === action.task.fromProject)?.tasks.push(action.task)
-                return {...state}
-            case 'UNASSIGN_PROJECT':
-
+        case 'DELETE_TASK':
+            state.tasks = state.tasks.filter(t => t !== action.task)
+            return { ...state }
+        case 'ADD_TASK':
+            if (state.tasks.findIndex(t => t.id === action.task.id) !== -1) {
+                return state
+            }
+            state.tasks.push(action.task)
+            state.projects.find(p => p === action.task.fromProject)?.tasks.push(action.task)
+            return { ...state }
+        case 'UNASSIGN_PROJECT':
             action.project.assignedTo = action.project.assignedTo.filter(p => p.id !== action.employ.id)
             return { ...state }
         default:
@@ -85,14 +84,14 @@ export default function ManagerView() {
                 />
             </div>
             <div className="projectViewFromManager">
-                <ProjectTableView
+                <ProjectTable
                     mode={'MANAGER'}
                     projects={currentState.projects}
                     dispatcher={dispatch}
                 />
             </div>
             <div className="addProjectView">
-                <AddProjectView
+                <AddProject
                     projects={currentState.projects}
                     manager={currentState.employees.find(e => e.id === managerId) || currentState.employees[0]}
                     dispatcher={dispatch}

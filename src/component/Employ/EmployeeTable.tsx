@@ -1,11 +1,11 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Chip, Select, MenuItem, FormControl, InputLabel } from "@mui/material"
 import { EmployEntity, ProjectEntity } from "../../api/ApiEntities"
-import { ManagerPageAction } from "../../pages/ManagerView";
+import { EmployeeAction } from "./EmployeeActions";
 
 export interface EmployeeTable {
     employs: EmployEntity[];
     projects: ProjectEntity[];
-    dispatcher: (action: ManagerPageAction) => void;
+    dispatcher: (action: EmployeeAction) => void;
 }
 
 export default function EmployeeTable({
