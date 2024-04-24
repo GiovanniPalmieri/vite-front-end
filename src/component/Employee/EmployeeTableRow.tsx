@@ -33,11 +33,12 @@ export function EmployeeTableRow({ employee, projects, dispatcher }: EmployeeTab
             </TableCell>
 
             <TableCell component="th" scope="row">
-                {projects.filter(p => p.assignedTo.includes(employee)).map((project, key) => <Chip label={project.name} onDelete={() => dispatcher({
-                    type: 'UNASSIGN_PROJECT',
-                    employee: employee,
-                    project: project
-                })} key={key} />)}
+                {projects.filter(p => p.assignedTo.includes(employee)).map((project, key) =>
+                    <Chip label={project.name} onDelete={() => dispatcher({
+                        type: 'UNASSIGN_PROJECT',
+                        employee: employee,
+                        project: project
+                    })} key={key} />)}
             </TableCell>
             <TableCell component="th" scope="row">
                 <SelectProjectComponent
