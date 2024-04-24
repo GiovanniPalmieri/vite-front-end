@@ -1,11 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { CURRENT_BASE_URL } from "./constants";
 
 export abstract class HttpClient {
     protected instance: AxiosInstance | undefined;
     
     protected createInstance(): AxiosInstance {
         this.instance = axios.create({
-            baseURL: "localhost:5054",
+            baseURL: CURRENT_BASE_URL,
             headers: {
                 "Content-Type": "application/json",
             },

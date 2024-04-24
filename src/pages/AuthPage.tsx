@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getRepo } from '../api/ApiMockRepository'
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
+import { EmployeeRepository, IEmployee } from '../repository/EmployeeRepository';
+import { ApiResponse } from '../repository/ApiResponse';
 
 
 export default function Auth() {
@@ -13,6 +15,14 @@ export default function Auth() {
     const [usernameError, setUsernameError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
 
+    const [employees, setEmployees] = useState<IEmployee[]>();
+    useEffect(() => {
+        const repository: EmployeeRepository = new EmployeeRepository();
+
+        repository.getMany(1,5).then((response: ApiResponse<IEmployee[]>) => {
+            console.log(response)
+        });
+    },[]);
 
     function handleSubmit() {
         setUsernameError(false)
