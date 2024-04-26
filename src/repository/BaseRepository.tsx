@@ -28,14 +28,21 @@ const transformError = (response: AxiosError): Promise<ApiResponse<any>> => {
 
 export abstract class BaseRepository<T> extends HttpClient implements IBaseRepository<T> {
 
-    protected collection: string | undefined;
+    protected getCollection: (() => string) = () => {return ''};
 
     public async getMany(pageNumber: number, pageSize: number): Promise<ApiResponse<T[]>> {
         const instance = this.createInstance();
         const result = await instance.get(
-            `${CURRENT_BASE_URL}/${this.collection}/?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+            `${CURRENT_BASE_URL}/${this.getCollection()}/?pageNumber=${pageNumber}&pageSize=${pageSize}`)
             .then(transformSuccess).catch(transformError)
         return result as ApiResponse<T[]>;
+    }
+
+    public async delete(id: any): Promise<ApiResponse<T>> {
+        const instance = this.createInstance();
+        const result = await instance.delete(`${CURRENT_BASE_URL}/${this.getCollection()}/${id}`)
+            .then(transformSuccess).catch(transformError);
+        return result as ApiResponse<T>;
     }
 
 }
