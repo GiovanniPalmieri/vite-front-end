@@ -3,26 +3,43 @@ import { getRepo } from '../api/ApiMockRepository';
 import ProjectTable from '../component/Project/ProjectTable';
 import { ProjectEntity } from '../api/ApiEntities';
 import TaskTable from '../component/Task/TaskTable';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { TaskAction } from '../component/Task/TaskActions';
+import { RepositoriesSingleton } from '../repository/RepositoriesSingleton';
+import { ProjectAction } from '../component/Project/ProjectActions';
+import { ApiResponse } from '../repository/ApiResponse';
+import { IProject } from '../repository/ProjectRepository';
 
 
 export type EmployeePageAction =
     | TaskAction;
 
-function reducer(state: ProjectEntity[], action: TaskAction): ProjectEntity[] {
-    switch (action.type) {
-        case 'DELETE_TASK':
-            let newTaskList = action.task.fromProject.tasks.filter(t => t !== action.task)
-            action.task.fromProject.tasks = newTaskList
-            return [...state]
-        default:
-            return state
-
-    }
-}
-
 export default function EmployView() {
+
+    function reducer(state: ProjectEntity[], action: TaskAction | ProjectAction): ProjectEntity[] {
+        switch (action.type) {
+            case 'SET_PROJECTS':
+                return action.projects;
+            case 'DELETE_TASK':
+                let newTaskList = action.task.fromProject.tasks.filter(t => t !== action.task)
+                action.task.fromProject.tasks = newTaskList
+                return [...state]
+            default:
+                return state
+
+        }
+    }
+
+    useEffect(() => {
+        RepositoriesSingleton.getInstance().projectRepo.getMany(1, 1).then((response: ApiResponse<IProject[]>) => {
+            if (response.data !== undefined){
+            dispatch({ type: 'SET_PROJECTS', projects: response.data.map(ip => {
+                return { id: ip.id, name: ip.name,  }
+            }) });
+            }
+        })
+    });
+
     const { state } = useLocation()
 
     const tempProject = getRepo().getAssigendProjects(state.user.id)
