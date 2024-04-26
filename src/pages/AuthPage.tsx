@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { EmployeeRepository, IEmployee } from '../repository/EmployeeRepository';
 import { ApiResponse } from '../repository/ApiResponse';
+import { IProject, ProjectRepository } from '../repository/ProjectRepository';
+import { RepositoriesSingleton } from '../repository/RepositoriesSingleton';
+import { ITask } from '../repository/TaskRepository';
 
 
 export default function Auth() {
@@ -16,13 +19,22 @@ export default function Auth() {
     const [passwordError, setPasswordError] = useState(false)
 
     const [employees, setEmployees] = useState<IEmployee[]>();
-    useEffect(() => {
-        const repository: EmployeeRepository = new EmployeeRepository();
 
-        repository.getMany(1,5).then((response: ApiResponse<IEmployee[]>) => {
+    useEffect(() => {
+
+        RepositoriesSingleton.getInstance().employeeRepo.getMany(1, 5).then((response: ApiResponse<IEmployee[]>) => {
             console.log(response)
         });
-    },[]);
+
+        RepositoriesSingleton.getInstance().projectRepo.getMany(1, 5).then((response: ApiResponse<IProject[]>) => {
+            console.log(response)
+        });
+
+        RepositoriesSingleton.getInstance().taskRepo.getMany(1, 5).then((response: ApiResponse<ITask[]>) => {
+            console.log(response)
+        });
+
+    }, []);
 
     function handleSubmit() {
         setUsernameError(false)
