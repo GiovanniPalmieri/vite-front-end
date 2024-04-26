@@ -1,5 +1,5 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import { ProjectEntity } from '../../models/ApiEntities'
+import { ProjectEntity } from '../../models/Models'
 import ProjectTableRow from './ProjectTableRow';
 import { ComponentMode } from '../ComponentModes';
 import { ProjectAction } from './ProjectActions';

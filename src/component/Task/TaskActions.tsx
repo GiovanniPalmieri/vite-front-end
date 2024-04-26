@@ -1,4 +1,4 @@
-import { TaskEntity } from "../../models/ApiEntities";
+import { TaskEntity } from "../../models/Models";
 
 export type TaskAction = 
     | {type: 'DELETE_TASK', task: TaskEntity}

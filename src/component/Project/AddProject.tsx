@@ -1,5 +1,5 @@
 import { Button, FormLabel, Stack, TextField } from "@mui/material";
-import { EmployeeEntity, ProjectEntity } from "../../models/ApiEntities";
+import { EmployeeEntity, ProjectEntity } from "../../models/Models";
 import React from "react";
 import { ManagerPageAction } from "../../pages/ManagerPage";
 

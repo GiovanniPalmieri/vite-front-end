@@ -1,5 +1,5 @@
 import { Button, TableCell, TableRow } from "@mui/material";
-import { TaskEntity } from "../../models/ApiEntities";
+import { TaskEntity } from "../../models/Models";
 import { TaskAction } from "./TaskActions";
 
 interface TaskTableRowProps {

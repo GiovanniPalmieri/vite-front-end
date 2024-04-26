@@ -1,6 +1,6 @@
 import { EmployeeTableRow } from './EmployeeTableRow';
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material"
-import { EmployeeEntity, ProjectEntity } from "../../models/ApiEntities"
+import { EmployeeEntity, ProjectEntity } from "../../models/Models"
 import { EmployeeAction } from "./EmployeeActions";
 
 export interface EmployeeTable {

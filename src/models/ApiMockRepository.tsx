@@ -1,4 +1,4 @@
-import { EmployeeEntity, ProjectEntity, TaskEntity } from "./ApiEntities";
+import { EmployeeEntity, ProjectEntity, TaskEntity } from "./Models";
 
 /**
  * @deprecated The method should not be used
