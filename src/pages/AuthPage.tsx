@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getRepo } from '../api/ApiMockRepository'
+import { getRepo } from '../models/ApiMockRepository'
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { EmployeeRepository, IEmployee } from '../repository/EmployeeRepository';

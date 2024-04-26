@@ -1,5 +1,8 @@
 import { EmployeeEntity } from "./ApiEntities";
 
+/**
+ * @deprecated The method should not be used
+ */
 export function getEmploys(): Promise<EmployeeEntity[]> {
 
     const headers: Headers = new Headers();

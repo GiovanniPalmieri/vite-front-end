@@ -1,5 +1,8 @@
 import { EmployeeEntity, ProjectEntity, TaskEntity } from "./ApiEntities";
 
+/**
+ * @deprecated The method should not be used
+ */
 let repo: ApiMockRepository
 export function getRepo(): ApiMockRepository {
     if (repo === undefined) {
@@ -23,10 +26,10 @@ class ApiMockRepository {
     ];
 
     tasks: TaskEntity[] = [
-        { id: "1", name: "testing", description: "fai i test", assignedTo: this.employs[0], fromProject: this.projects[0] },
-        { id: "2", name: "fix 5", description: "sistema 5", assignedTo: this.employs[0], fromProject: this.projects[0] },
-        { id: "3", name: "fix 45", description: "sistema 45", assignedTo: this.employs[1], fromProject: this.projects[1] },
-        { id: "4", name: "robbe", description: "fai tante robbe", assignedTo: this.employs[1], fromProject: this.projects[1] },
+        { id: "1", name: "testing", description: "fai i test",  fromProject: this.projects[0] },
+        { id: "2", name: "fix 5", description: "sistema 5", fromProject: this.projects[0] },
+        { id: "3", name: "fix 45", description: "sistema 45",  fromProject: this.projects[1] },
+        { id: "4", name: "robbe", description: "fai tante robbe", fromProject: this.projects[1] },
     ];
 
     constructor(){

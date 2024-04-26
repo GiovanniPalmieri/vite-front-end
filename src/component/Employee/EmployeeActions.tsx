@@ -1,4 +1,4 @@
-import { EmployeeEntity, ProjectEntity } from "../../api/ApiEntities";
+import { EmployeeEntity, ProjectEntity } from "../../models/ApiEntities";
 
 export type EmployeeAction =
     | { type: 'ASSIGN_PROJECT'; projectId: string; employee: EmployeeEntity }

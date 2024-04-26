@@ -1,6 +1,6 @@
 import { useReducer } from "react";
-import { EmployeeEntity, ProjectEntity, TaskEntity } from "../api/ApiEntities";
-import { getRepo } from "../api/ApiMockRepository";
+import { EmployeeEntity, ProjectEntity, TaskEntity } from "../models/ApiEntities";
+import { getRepo } from "../models/ApiMockRepository";
 import EmployeeTable from "../component/Employee/EmployeeTable";
 import { useLocation } from "react-router-dom";
 import ProjectTable from "../component/Project/ProjectTable";

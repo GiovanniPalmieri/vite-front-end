@@ -1,5 +1,5 @@
 import { TableRow, TableCell, Chip, SelectChangeEvent } from "@mui/material";
-import { EmployeeEntity, ProjectEntity } from "../../api/ApiEntities";
+import { EmployeeEntity, ProjectEntity } from "../../models/ApiEntities";
 import { EmployeeAction } from "./EmployeeActions";
 import SelectProjectComponent from "../SelectProjectComponent";
 

@@ -1,5 +1,5 @@
 import { TableRow, TableCell, Chip, Button } from "@mui/material";
-import { ProjectEntity } from "../../api/ApiEntities"
+import { ProjectEntity } from "../../models/ApiEntities"
 import { ComponentMode } from "../ComponentModes";
 import { ProjectAction } from "./ProjectActions";
 

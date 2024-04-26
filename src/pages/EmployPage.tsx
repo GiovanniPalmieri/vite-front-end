@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import { getRepo } from '../api/ApiMockRepository';
+import { getRepo } from '../models/ApiMockRepository';
 import ProjectTable from '../component/Project/ProjectTable';
-import { ProjectEntity } from '../api/ApiEntities';
+import { ProjectEntity } from '../models/ApiEntities';
 import TaskTable from '../component/Task/TaskTable';
 import { useEffect, useReducer } from 'react';
 import { TaskAction } from '../component/Task/TaskActions';

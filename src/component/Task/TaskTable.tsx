@@ -1,5 +1,5 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
-import { TaskEntity } from "../../api/ApiEntities";
+import { TaskEntity } from "../../models/ApiEntities";
 import TaskTableRow from "./TaskTableRow";
 import { TaskAction } from "./TaskActions";
 

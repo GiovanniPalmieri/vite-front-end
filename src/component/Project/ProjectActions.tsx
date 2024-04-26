@@ -1,4 +1,4 @@
-import { ProjectEntity } from "../../api/ApiEntities";
+import { ProjectEntity } from "../../models/ApiEntities";
 
 export type ProjectAction =
     | { type: 'CREATE_PROJECT'; project: ProjectEntity }
